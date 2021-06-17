@@ -19,7 +19,7 @@ import pe.edu.upc.spring.model.Dia;
 import pe.edu.upc.spring.service.IDiaService;
 
 @Controller
-@RequestMapping("/dia")
+@RequestMapping("/dias")
 public class DiaController {
 
 	@Autowired
@@ -27,6 +27,7 @@ public class DiaController {
 
 	@RequestMapping("/")
 	public String irListado(Map<String, Object> model) {
+		model.put("dia", new Dia());
 		model.put("listDia", srvDia.listar());
 		return "listDia";
 	}
@@ -44,10 +45,10 @@ public class DiaController {
 		else {
 			boolean flag = srvDia.insertar(objDia);
 			if (flag)
-				return "redirect:/dia/listar";
+				return "redirect:/dias/";
 			else {
 				model.addAttribute("mensaje", "Ocurrió un error");
-				return "redirect:/dia/irRegistrar";
+				return "redirect:/dias/irRegistrar";
 			}
 		}
 		
@@ -58,7 +59,7 @@ public class DiaController {
 		Optional<Dia> objDia = srvDia.listarPorId(id);
 		if (objDia == null) {
 			objRedir.addFlashAttribute("mensaje", "Ocurrió un error");
-			return "redirect:/dia/listar";
+			return "redirect:/dias/";
 		}
 		else {
 			model.addAttribute("dia", objDia);
@@ -71,19 +72,20 @@ public class DiaController {
 		try {
 			if (id != null && id > 0) {
 				srvDia.eliminar(id);
-				model.put("listDia", srvDia.listar());
 			}
 		}
 		catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("mensaje", "Ocurrió un error");
-			model.put("listDia", srvDia.listar());
 		}
+		model.put("dia", new Dia());
+		model.put("listDia", srvDia.listar());
 		return "listDia";
 	}
 	
-	@RequestMapping("/listar")
+	/*@RequestMapping("/listar")
 	public String listar(Map<String, Object> model) {
+		model.put("dia", new Dia());
 		model.put("listDia", srvDia.listar());
 		return "listDia";
 	}
@@ -92,7 +94,7 @@ public class DiaController {
 	public String irBuscar(Model model) {
 		model.addAttribute("dia", new Dia());
 		return "searchDia";
-	}
+	}*/
 	
 	@RequestMapping("/buscar")
 	public String buscar(Map<String, Object> model, @ModelAttribute Dia dia) throws ParseException {
@@ -102,6 +104,6 @@ public class DiaController {
 			model.put("mensaje", "No se encontraron coincidencias.");
 		}
 		model.put("listDia", listDia);
-		return "searchDia";
+		return "listDia";
 	}
 }

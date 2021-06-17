@@ -19,7 +19,7 @@ import pe.edu.upc.spring.model.Profesor;
 import pe.edu.upc.spring.service.IProfesorService;
 
 @Controller
-@RequestMapping("/profesor")
+@RequestMapping("/profesores")
 public class ProfesorController {
 
 	@Autowired
@@ -27,6 +27,7 @@ public class ProfesorController {
 	
 	@RequestMapping("/")
 	public String irListado(Map<String, Object> model) {
+		model.put("profesor", new Profesor());
 		model.put("listProfesor", srvProfesor.listar());
 		return "listProfesor";
 	}
@@ -44,10 +45,10 @@ public class ProfesorController {
 		else {
 			boolean flag = srvProfesor.insertar(objProfesor);
 			if (flag)
-				return "redirect:/profesor/listar";
+				return "redirect:/profesores/";
 			else {
 				model.addAttribute("mensaje", "Ocurrió un error");
-				return "redirect:/profesor/irRegistrar";
+				return "redirect:/profesores/irRegistrar";
 			}
 		}
 		
@@ -58,7 +59,7 @@ public class ProfesorController {
 		Optional<Profesor> objProfesor = srvProfesor.listarPorId(id);
 		if (objProfesor == null) {
 			objRedir.addFlashAttribute("mensaje", "Ocurrió un error");
-			return "redirect:/profesor/listar";
+			return "redirect:/profesores/";
 		}
 		else {
 			model.addAttribute("profesor", objProfesor);
@@ -71,19 +72,20 @@ public class ProfesorController {
 		try {
 			if (id != null && id > 0) {
 				srvProfesor.eliminar(id);
-				model.put("listProfesor", srvProfesor.listar());
 			}
 		}
 		catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("mensaje", "Ocurrió un error");
-			model.put("listProfesor", srvProfesor.listar());
 		}
+		model.put("profesor", new Profesor());
+		model.put("listProfesor", srvProfesor.listar());
 		return "listProfesor";
 	}
 	
-	@RequestMapping("/listar")
+	/*@RequestMapping("/listar")
 	public String listar(Map<String, Object> model) {
+		model.put("profesor", new Profesor());
 		model.put("listProfesor", srvProfesor.listar());
 		return "listProfesor";
 	}
@@ -92,16 +94,16 @@ public class ProfesorController {
 	public String irBuscar(Model model) {
 		model.addAttribute("profesor", new Profesor());
 		return "searchProfesor";
-	}
+	}*/
 	
 	@RequestMapping("/buscar")
 	public String buscar(Map<String, Object> model, @ModelAttribute Profesor profesor) throws ParseException {
 		List<Profesor> listProfesor;
-		listProfesor = srvProfesor.buscarPorNombre(profesor.getNombre());
+		listProfesor = srvProfesor.buscarPorFiltro(profesor.getNombre());
 		if (listProfesor.isEmpty()) {
 			model.put("mensaje", "No se encontraron coincidencias.");
 		}
 		model.put("listProfesor", listProfesor);
-		return "searchProfesor";
+		return "listProfesor";
 	}
 }

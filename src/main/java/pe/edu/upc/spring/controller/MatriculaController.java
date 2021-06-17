@@ -23,7 +23,7 @@ import pe.edu.upc.spring.service.ICursoService;
 import pe.edu.upc.spring.service.IAlumnoService;
 
 @Controller
-@RequestMapping("/matricula")
+@RequestMapping("/matriculas")
 public class MatriculaController {
 
 	@Autowired
@@ -37,6 +37,7 @@ public class MatriculaController {
 	
 	@RequestMapping("/")
 	public String irListado(Map<String, Object> model) {
+		model.put("matricula", new Matricula());
 		model.put("listMatricula", srvMatricula.listar());
 		return "listMatricula";
 	}
@@ -61,10 +62,10 @@ public class MatriculaController {
 		else {
 			boolean flag = srvMatricula.insertar(objMatricula);
 			if (flag)
-				return "redirect:/matricula/listar";
+				return "redirect:/matriculas/";
 			else {
 				model.addAttribute("mensaje", "Ocurrió un error");
-				return "redirect:/matricula/irRegistrar";
+				return "redirect:/matriculas/irRegistrar";
 			}
 		}
 		
@@ -75,7 +76,7 @@ public class MatriculaController {
 		Optional<Matricula> objMatricula = srvMatricula.listarPorId(id);
 		if (objMatricula == null) {
 			objRedir.addFlashAttribute("mensaje", "Ocurrió un error");
-			return "redirect:/matricula/listar";
+			return "redirect:/matriculas/";
 		}
 		else {
 			model.addAttribute("listCurso", srvCurso.listar());
@@ -91,19 +92,34 @@ public class MatriculaController {
 		try {
 			if (id != null && id > 0) {
 				srvMatricula.eliminar(id);
-				model.put("listMatricula", srvMatricula.listar());
 			}
 		}
 		catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("mensaje", "Ocurrió un error");
-			model.put("listMatricula", srvMatricula.listar());
 		}
+		model.put("matricula", new Matricula());
+		model.put("listMatricula", srvMatricula.listar());
 		return "listMatricula";
 	}
 	
-	@RequestMapping("/listar")
+	@RequestMapping("/mostrar/{id}")
+	public String mostrar(@PathVariable int id, Model model, RedirectAttributes objRedir) throws ParseException {
+		Optional<Matricula> objMatricula = srvMatricula.listarPorId(id);
+		if (objMatricula == null) {
+			objRedir.addFlashAttribute("mensaje", "Ocurrió un error");
+			return "redirect:/matriculas/";
+		}
+		else {
+			if (objMatricula.isPresent())
+				objMatricula.ifPresent(obj -> model.addAttribute("matricula", obj));
+			return "matricula";
+		}
+	}
+	
+	/*@RequestMapping("/listar")
 	public String listar(Map<String, Object> model) {
+		model.put("matricula", new Matricula());
 		model.put("listMatricula", srvMatricula.listar());
 		return "listMatricula";
 	}
@@ -112,7 +128,7 @@ public class MatriculaController {
 	public String irBuscar(Model model) {
 		model.addAttribute("matricula", new Matricula());
 		return "searchMatricula";
-	}
+	}*/
 	
 	@RequestMapping("/buscar")
 	public String buscar(Map<String, Object> model, @ModelAttribute Matricula matricula) throws ParseException {
@@ -122,6 +138,6 @@ public class MatriculaController {
 			model.put("mensaje", "No se encontraron coincidencias.");
 		}
 		model.put("listMatricula", listMatricula);
-		return "searchMatricula";
+		return "listMatricula";
 	}
 }

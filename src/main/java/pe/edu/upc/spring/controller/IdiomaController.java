@@ -1,4 +1,4 @@
-	package pe.edu.upc.spring.controller;
+package pe.edu.upc.spring.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -19,19 +19,15 @@ import pe.edu.upc.spring.model.Idioma;
 import pe.edu.upc.spring.service.IIdiomaService;
 
 @Controller
-@RequestMapping("/idioma")
+@RequestMapping("/idiomas")
 public class IdiomaController {
 
 	@Autowired
 	private IIdiomaService srvIdioma;
 	
-	@RequestMapping("/bienvenido")
-	public String irPaginaBienvenida() {
-		return "bienvenido";
-	}
-	
 	@RequestMapping("/")
 	public String irListado(Map<String, Object> model) {
+		model.put("idioma", new Idioma());
 		model.put("listIdioma", srvIdioma.listar());
 		return "listIdioma";
 	}
@@ -49,10 +45,10 @@ public class IdiomaController {
 		else {
 			boolean flag = srvIdioma.insertar(objIdioma);
 			if (flag)
-				return "redirect:/idioma/listar";
+				return "redirect:/idiomas/";
 			else {
 				model.addAttribute("mensaje", "Ocurrió un error");
-				return "redirect:/idioma/irRegistrar";
+				return "redirect:/idiomas/irRegistrar";
 			}
 		}
 		
@@ -63,7 +59,7 @@ public class IdiomaController {
 		Optional<Idioma> objIdioma = srvIdioma.listarPorId(id);
 		if (objIdioma == null) {
 			objRedir.addFlashAttribute("mensaje", "Ocurrió un error");
-			return "redirect:/idioma/listar";
+			return "redirect:/idiomas/";
 		}
 		else {
 			model.addAttribute("idioma", objIdioma);
@@ -76,19 +72,20 @@ public class IdiomaController {
 		try {
 			if (id != null && id > 0) {
 				srvIdioma.eliminar(id);
-				model.put("listIdioma", srvIdioma.listar());
 			}
 		}
 		catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("mensaje", "Ocurrió un error");
-			model.put("listIdioma", srvIdioma.listar());
 		}
+		model.put("idioma", new Idioma());
+		model.put("listIdioma", srvIdioma.listar());
 		return "listIdioma";
 	}
 	
-	@RequestMapping("/listar")
+	/*@RequestMapping("/listar")
 	public String listar(Map<String, Object> model) {
+		model.put("idioma", new Idioma());
 		model.put("listIdioma", srvIdioma.listar());
 		return "listIdioma";
 	}
@@ -97,7 +94,7 @@ public class IdiomaController {
 	public String irBuscar(Model model) {
 		model.addAttribute("idioma", new Idioma());
 		return "searchIdioma";
-	}
+	}*/
 	
 	@RequestMapping("/buscar")
 	public String buscar(Map<String, Object> model, @ModelAttribute Idioma idioma) throws ParseException {
@@ -107,6 +104,6 @@ public class IdiomaController {
 			model.put("mensaje", "No se encontraron coincidencias.");
 		}
 		model.put("listIdioma", listIdioma);
-		return "searchIdioma";
+		return "listIdioma";
 	}
 }

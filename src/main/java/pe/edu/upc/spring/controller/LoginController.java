@@ -15,9 +15,4 @@ public class LoginController {
 	public String irLogin() {
 		return "redirect:/login";
 	}
-
-	
-	
-	
-	
 }

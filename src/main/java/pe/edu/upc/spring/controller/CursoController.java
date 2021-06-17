@@ -23,7 +23,7 @@ import pe.edu.upc.spring.service.IIdiomaService;
 import pe.edu.upc.spring.service.IProfesorService;
 
 @Controller
-@RequestMapping("/curso")
+@RequestMapping("/cursos")
 public class CursoController {
 
 	@Autowired
@@ -37,6 +37,7 @@ public class CursoController {
 	
 	@RequestMapping("/")
 	public String irListado(Map<String, Object> model) {
+		model.put("curso", new Curso());
 		model.put("listCurso", srvCurso.listar());
 		return "listCurso";
 	}
@@ -61,10 +62,10 @@ public class CursoController {
 		else {
 			boolean flag = srvCurso.insertar(objCurso);
 			if (flag)
-				return "redirect:/curso/listar";
+				return "redirect:/cursos/";
 			else {
 				model.addAttribute("mensaje", "Ocurrió un error");
-				return "redirect:/curso/irRegistrar";
+				return "redirect:/cursos/irRegistrar";
 			}
 		}
 		
@@ -75,12 +76,13 @@ public class CursoController {
 		Optional<Curso> objCurso = srvCurso.listarPorId(id);
 		if (objCurso == null) {
 			objRedir.addFlashAttribute("mensaje", "Ocurrió un error");
-			return "redirect:/curso/listar";
+			return "redirect:/cursos/";
 		}
 		else {
 			model.addAttribute("listIdioma", srvIdioma.listar());
 			model.addAttribute("listProfesor", srvProfesor.listar());
-			model.addAttribute("curso", objCurso);
+			if (objCurso.isPresent())
+				objCurso.ifPresent(obj -> model.addAttribute("curso", obj));
 			return "curso";
 		}
 	}
@@ -90,19 +92,20 @@ public class CursoController {
 		try {
 			if (id != null && id > 0) {
 				srvCurso.eliminar(id);
-				model.put("listCurso", srvCurso.listar());
 			}
 		}
 		catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("mensaje", "Ocurrió un error");
-			model.put("listCurso", srvCurso.listar());
 		}
+		model.put("curso", new Curso());
+		model.put("listCurso", srvCurso.listar());
 		return "listCurso";
 	}
 	
-	@RequestMapping("/listar")
+	/*@RequestMapping("/listar")
 	public String listar(Map<String, Object> model) {
+		model.put("curso", new Curso());
 		model.put("listCurso", srvCurso.listar());
 		return "listCurso";
 	}
@@ -111,7 +114,7 @@ public class CursoController {
 	public String irBuscar(Model model) {
 		model.addAttribute("curso", new Curso());
 		return "searchCurso";
-	}
+	}*/
 	
 	@RequestMapping("/buscar")
 	public String buscar(Map<String, Object> model, @ModelAttribute Curso curso) throws ParseException {
@@ -121,6 +124,6 @@ public class CursoController {
 			model.put("mensaje", "No se encontraron coincidencias.");
 		}
 		model.put("listCurso", listCurso);
-		return "searchCurso";
+		return "listCurso";
 	}
 }

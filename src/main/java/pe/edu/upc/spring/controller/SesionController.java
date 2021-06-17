@@ -23,7 +23,7 @@ import pe.edu.upc.spring.service.ICursoService;
 import pe.edu.upc.spring.service.IDiaService;
 
 @Controller
-@RequestMapping("/sesion")
+@RequestMapping("/sesiones")
 public class SesionController {
 
 	@Autowired
@@ -37,6 +37,7 @@ public class SesionController {
 	
 	@RequestMapping("/")
 	public String irListado(Map<String, Object> model) {
+		model.put("sesion", new Sesion());
 		model.put("listSesion", srvSesion.listar());
 		return "listSesion";
 	}
@@ -61,10 +62,10 @@ public class SesionController {
 		else {
 			boolean flag = srvSesion.insertar(objSesion);
 			if (flag)
-				return "redirect:/sesion/listar";
+				return "redirect:/sesiones/";
 			else {
 				model.addAttribute("mensaje", "Ocurrió un error");
-				return "redirect:/sesion/irRegistrar";
+				return "redirect:/sesiones/irRegistrar";
 			}
 		}
 		
@@ -75,7 +76,7 @@ public class SesionController {
 		Optional<Sesion> objSesion = srvSesion.listarPorId(id);
 		if (objSesion == null) {
 			objRedir.addFlashAttribute("mensaje", "Ocurrió un error");
-			return "redirect:/sesion/listar";
+			return "redirect:/sesiones/";
 		}
 		else {
 			model.addAttribute("listCurso", srvCurso.listar());
@@ -91,19 +92,20 @@ public class SesionController {
 		try {
 			if (id != null && id > 0) {
 				srvSesion.eliminar(id);
-				model.put("listSesion", srvSesion.listar());
 			}
 		}
 		catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("mensaje", "Ocurrió un error");
-			model.put("listSesion", srvSesion.listar());
 		}
+		model.put("sesion", new Sesion());
+		model.put("listSesion", srvSesion.listar());
 		return "listSesion";
 	}
 	
-	@RequestMapping("/listar")
+	/*@RequestMapping("/listar")
 	public String listar(Map<String, Object> model) {
+		model.put("sesion", new Sesion());
 		model.put("listSesion", srvSesion.listar());
 		return "listSesion";
 	}
@@ -112,7 +114,7 @@ public class SesionController {
 	public String irBuscar(Model model) {
 		model.addAttribute("sesion", new Sesion());
 		return "searchSesion";
-	}
+	}*/
 	
 	@RequestMapping("/buscar")
 	public String buscar(Map<String, Object> model, @ModelAttribute Sesion sesion) throws ParseException {
@@ -122,6 +124,6 @@ public class SesionController {
 			model.put("mensaje", "No se encontraron coincidencias.");
 		}
 		model.put("listSesion", listSesion);
-		return "searchSesion";
+		return "listSesion";
 	}
 }

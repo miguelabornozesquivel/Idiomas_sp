@@ -19,7 +19,7 @@ import pe.edu.upc.spring.model.Alumno;
 import pe.edu.upc.spring.service.IAlumnoService;
 
 @Controller
-@RequestMapping("/alumno")
+@RequestMapping("/alumnos")
 public class AlumnoController {
 
 	@Autowired
@@ -27,6 +27,7 @@ public class AlumnoController {
 	
 	@RequestMapping("/")
 	public String irListado(Map<String, Object> model) {
+		model.put("alumno", new Alumno());
 		model.put("listAlumno", srvAlumno.listar());
 		return "listAlumno";
 	}
@@ -44,10 +45,10 @@ public class AlumnoController {
 		else {
 			boolean flag = srvAlumno.insertar(objAlumno);
 			if (flag)
-				return "redirect:/alumno/listar";
+				return "redirect:/alumnos/";
 			else {
 				model.addAttribute("mensaje", "Ocurrió un error");
-				return "redirect:/alumno/irRegistrar";
+				return "redirect:/alumnos/irRegistrar";
 			}
 		}
 		
@@ -58,7 +59,7 @@ public class AlumnoController {
 		Optional<Alumno> objAlumno = srvAlumno.listarPorId(id);
 		if (objAlumno == null) {
 			objRedir.addFlashAttribute("mensaje", "Ocurrió un error");
-			return "redirect:/alumno/listar";
+			return "redirect:/alumnos/";
 		}
 		else {
 			model.addAttribute("alumno", objAlumno);
@@ -71,19 +72,20 @@ public class AlumnoController {
 		try {
 			if (id != null && id > 0) {
 				srvAlumno.eliminar(id);
-				model.put("listAlumno", srvAlumno.listar());
 			}
 		}
 		catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("mensaje", "Ocurrió un error");
-			model.put("listAlumno", srvAlumno.listar());
 		}
+		model.put("alumno", new Alumno());
+		model.put("listAlumno", srvAlumno.listar());
 		return "listAlumno";
 	}
 	
-	@RequestMapping("/listar")
+	/*@RequestMapping("/listar")
 	public String listar(Map<String, Object> model) {
+		model.put("alumno", new Alumno());
 		model.put("listAlumno", srvAlumno.listar());
 		return "listAlumno";
 	}
@@ -92,16 +94,16 @@ public class AlumnoController {
 	public String irBuscar(Model model) {
 		model.addAttribute("alumno", new Alumno());
 		return "searchAlumno";
-	}
+	}*/
 	
 	@RequestMapping("/buscar")
 	public String buscar(Map<String, Object> model, @ModelAttribute Alumno alumno) throws ParseException {
 		List<Alumno> listAlumno;
-		listAlumno = srvAlumno.buscarPorNombre(alumno.getNombre());
+		listAlumno = srvAlumno.buscarPorFiltro(alumno.getNombre());
 		if (listAlumno.isEmpty()) {
 			model.put("mensaje", "No se encontraron coincidencias.");
 		}
 		model.put("listAlumno", listAlumno);
-		return "searchAlumno";
+		return "listAlumno";
 	}
 }
