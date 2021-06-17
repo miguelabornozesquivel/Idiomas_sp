@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	<title>Cursos</title>
+	<link rel="stylesheet" id="bootstrap-css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div th:replace="fragments/header::header"></div>
+	<div class="container">
+		<h1 style="margin:20px 0">Cursos</h1>
+		<form id="myform">
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<a style="border-bottom-color:green" th:href="@{/curso/irRegistrar}" id="add-row" 
+						type="button" class="btn btn-primary btn-md left-block">
+						<span class="glyphicon glyphicon-plus"></span> Nuevo
+					</a>
+					<a style="border-bottom-color:green" th:href="@{/curso/irBuscar}" id="add-row" 
+						type="button" class="btn btn-primary btn-md left-block">
+						<span class="glyphicon glyphicon-search"></span> Buscar
+					</a>
+					<div style="height:20px"></div>
+					<table class="table table-bordered table-hover table-striped" id="tab_logic">
+						<thead>
+							<tr>
+								<th class="text-center">CÓDIGO</th>
+								<th class="text-center">NIVEL</th>
+								<th class="text-center">ENLACE</th>
+								<th class="text-center">SEMANAS</th>
+								<th class="text-center">F. INICIO</th>
+								<th class="text-center">F. FIN</th>
+								<th class="text-center">PROFESOR</th>
+								<th class="text-center">OPERACIONES</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="i:${listCurso}">
+								<td th:text="${i.id}"></td>
+								<td th:text="${i.idioma.nombre + ' ' + i.nivel}"></td>
+								<td th:text="${i.enlace}"></td>
+								<td th:text="${i.duracion}"></td>
+								<td th:text="${#dates.format(i.fechaIni,'dd/MM/yyyy')}"></td>
+								<td th:text="${#dates.format(i.fechaFin,'dd/MM/yyyy')}"></td>
+								<td th:text="${i.profesor.nombre + ' ' + i.profesor.apellido}"></td>
+								<td style="text-align:center">
+									<a th:href="@{'/curso/modificar/'+${i.id}}"><span class="glyphicon glyphicon-edit" title="Modificar"></span></a>
+									<a th:href="@{/curso/eliminar?id=}+${i.id}"><span class="glyphicon glyphicon-trash" title="Eliminar"></span></a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div th:if="${mensaje}" class="alert alert-danger">
+				<p th:text="${mensaje}"></p>
+			</div>
+		</form>
+	</div>
+	<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

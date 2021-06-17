@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	<title>Nuevo alumno</title>
+	<link rel="stylesheet" id="bootstrap-css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div th:replace="fragments/header::header"></div>
+	<div class="container">
+		<h1 style="margin:20px 0">Nuevo alumno</h1>
+		<form th:action="@{/alumno/registrar}" method="post" th:object="${alumno}">
+			<div class="form-group">
+				<label for="id">ID:</label>
+				<input type="text" class="form-control" th:field="*{id}" id="id">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('id')}" 
+					th:errors="*{id}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="nombre">NOMBRE:</label>
+				<input type="text" class="form-control" th:field="*{nombre}" id="nombre">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('nombre')}" 
+					th:errors="*{nombre}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="nombre">APELLIDO:</label>
+				<input type="text" class="form-control" th:field="*{apellido}" id="apellido">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('apellido')}" 
+					th:errors="*{apellido}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="nombre">CORREO:</label>
+				<input type="text" class="form-control" th:field="*{correo}" id="correo">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('correo')}" 
+					th:errors="*{correo}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="nombre">CONTRASEÑA:</label>
+				<input type="password" class="form-control" th:field="*{contrasena}" id="contrasena">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('contrasena')}" 
+					th:errors="*{contrasena}">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">Guardar</button>
+			<a href="/alumno/listar" class="btn btn-danger">Cancelar</a>
+		</form>
+	</div>
+	<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	<link rel="stylesheet" id="bootstrap-css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<!-- th:fragment define un fragment los cuales sirven para evitar la redundancia de codigo -->
+	<!-- Sintaxis th:fragment="Nombre del fragment" -->
+	<div th:fragment="header">
+		<!-- this is header -->
+		<nav class="navbar navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" th:href="@{/idioma/bienvenido}">Idiomas v2.0</a>
+				</div>
+				<div id="navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a th:href="@{/idioma/listar}">Idiomas</a></li>
+						<li class="active"><a th:href="@{/alumno/listar}">Alumnos</a></li>
+						<li class="active"><a th:href="@{/profesor/listar}">Profesores</a></li>
+						<li class="active"><a th:href="@{/dia/listar}">Días</a></li>
+						<li class="active"><a th:href="@{/curso/listar}">Cursos</a></li>
+						<li class="active"><a th:href="@{/sesion/listar}">Sesiones</a></li>
+						<li class="active"><a th:href="@{/matricula/listar}">Matrícula</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	<title>Nueva sesión</title>
+	<link rel="stylesheet" id="bootstrap-css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div th:replace="fragments/header::header"></div>
+	<div class="container">
+		<h1 style="margin:20px 0">Nueva sesión</h1>
+		<form th:action="@{/sesion/registrar}" method="post" th:object="${sesion}">
+			<div class="form-group">
+				<label for="id">ID:</label>
+				<input type="text" class="form-control" th:field="*{id}" id="id">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('id')}" 
+					th:errors="*{id}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="idioma" class="col-sm-2 col-form-label">CURSO:</label>
+				<select class="form-control" th:field="*{curso.id}">
+					<option th:each="i:${listCurso}" th:value="${i.id}"
+							th:text="${i.idioma.nombre + ' ' + i.nivel}"
+							th:selected="(${i.id} == *{curso.id})">
+					</option>			
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="profesor" class="col-sm-2 col-form-label">DÍA:</label>
+				<select class="form-control" th:field="*{dia.id}">
+					<option th:each="d:${listDia}" th:value="${d.id}"
+							th:text="${d.nombre}"
+							th:selected="(${d.id} == *{dia.id})">
+					</option>			
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="fechaIni">HORA INICIO:</label>
+				<input type="time" class="form-control" th:field="*{horaIni}" id="horaIni">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('horaIni')}" 
+					th:errors="*{horaIni}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="fechaFin">HORA FIN:</label>
+				<input type="time" class="form-control" th:field="*{horaFin}" id="horaFin">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('horaFin')}" 
+					th:errors="*{horaFin}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="nivel">DETALLE:</label>
+				<input type="text" class="form-control" th:field="*{detalle}" id="detalle">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('detalle')}" 
+					th:errors="*{detalle}">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">Guardar</button>
+			<a href="/sesion/listar" class="btn btn-danger">Cancelar</a>
+		</form>
+	</div>
+	<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>
