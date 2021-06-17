@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8"></meta>
-	<title>Búsqueda de idiomas</title>
+	<title>Búsqueda de cursos</title>
 	<script type="text/javascript"src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js"></script>
 	<link rel="stylesheet" id="bootstrap-css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">	
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -11,31 +11,41 @@
 <body>
 	<div th:replace="fragments/header::header"></div>
 	<div class="container">
-		<h1 style="margin:20px 0">Búsqueda de idiomas</h1>
-		<form th:action="@{/idioma/buscar}" method="post" th:object="${idioma}">
+		<h1 style="margin:20px 0">Búsqueda de cursos</h1>
+		<form th:action="@{/curso/buscar}" method="post" th:object="${curso}">
 			<div class="form-group">
-				<label for="nombre">Texto a buscar:</label>
-				<input type="text" class="form-control" th:field="*{nombre}" id="nombre">
+				<label for="nivel">Texto a buscar:</label>
+				<input type="text" class="form-control" th:field="*{nivel}" id="nivel">
 			</div>
 			<button type="submit" class="btn btn-primary">Buscar</button>
-			<a href="/idioma/listar" class="btn btn-danger">Atrás</a>
+			<a href="/curso/listar" class="btn btn-danger">Atrás</a>
 		</form>
 		<div style="height:20px"></div>
 		<table class="table table-bordered table-hover table-striped" id="tab_logic">
 			<thead>
 				<tr>
 					<th class="text-center">CÓDIGO</th>
-					<th class="text-center">NOMBRE</th>
+					<th class="text-center">NIVEL</th>
+					<th class="text-center">ENLACE</th>
+					<th class="text-center">SEMANAS</th>
+					<th class="text-center">F. INICIO</th>
+					<th class="text-center">F. FIN</th>
+					<th class="text-center">PROFESOR</th>
 					<th class="text-center">OPERACIONES</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="i:${listIdioma}">
+				<tr th:each="i:${listCurso}">
 					<td th:text="${i.id}"></td>
-					<td th:text="${i.nombre}"></td>
+					<td th:text="${i.idioma.nombre + ' ' + i.nivel}"></td>
+					<td th:text="${i.enlace}"></td>
+					<td th:text="${i.duracion}"></td>
+					<td th:text="${#dates.format(i.fechaIni,'dd/MM/yyyy')}"></td>
+					<td th:text="${#dates.format(i.fechaFin,'dd/MM/yyyy')}"></td>
+					<td th:text="${i.profesor.nombre + ' ' + i.profesor.apellido}"></td>
 					<td style="text-align:center">
-						<a th:href="@{'/idioma/modificar/'+${i.id}}"><span class="glyphicon glyphicon-edit" title="Modificar"></span></a>
-						<a th:href="@{/idioma/eliminar?id=}+${i.id}"><span class="glyphicon glyphicon-trash" title="Eliminar"></span></a>
+						<a th:href="@{'/curso/modificar/'+${i.id}}"><span class="glyphicon glyphicon-edit" title="Modificar"></span></a>
+						<a th:href="@{/curso/eliminar?id=}+${i.id}"><span class="glyphicon glyphicon-trash" title="Eliminar"></span></a>
 					</td>
 				</tr>
 			</tbody>
