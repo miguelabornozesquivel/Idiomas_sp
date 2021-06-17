@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="UTF-8"></meta>
 	<link rel="stylesheet" id="bootstrap-css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -10,14 +10,30 @@
 	<!-- Sintaxis th:fragment="Nombre del fragment" -->
 	<div th:fragment="header">
 		<!-- this is header -->
-		<nav class="navbar navbar-inverse" style="background-color:#F4A141 " >
+		<nav class="navbar navbar-light" style="background-color: #F4A141;">
 			<div class="container">
 				<div class="navbar-header">
-					<a class="navbar-brand" style= "color:#000000" th:href="@{/idioma/bienvenido}">NeoTechnology</a>
+					<a class="navbar-brand" th:href="@{/bienvenido}">Neo-Technology</a>
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
-					<ul class="nav navbar-nav" style="background-color:#F4A141">
-						<li class="active"><a th:href="@{/idioma/listar}">Idiomas</a></li>
+					<ul class="nav navbar-nav">
+						<li class="active"><a th:href="@{/idiomas/}">Idiomas</a></li>
+						<li class="active"><a th:href="@{/alumnos/}">Alumnos</a></li>
+						<li class="active"><a th:href="@{/profesores/}">Profesores</a></li>
+						<li class="active"><a th:href="@{/dias/}">Días</a></li>
+						<li class="active"><a th:href="@{/cursos/}">Cursos</a></li>
+						<li class="active"><a th:href="@{/sesiones/}">Sesiones</a></li>
+						<li class="active"><a th:href="@{/matriculas/}">Matrícula</a></li>
+						<li sec:authorize="!isAuthenticated()" class="nav-item">
+				            <a class="btn btn-outline-light" th:href="@{/login}">
+				            	<span class="glyphicon glyphicon-log-in"></span> Iniciar sesión
+				            </a>
+				        </li>
+				        <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+			                <a class="pl-3" th:href="@{/logout}">
+			                	<span class="glyphicon glyphicon-log-out"></span> Cerrar sesión
+			                </a>
+				        </li>
 					</ul>
 				</div>
 			</div>
