@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	<title>Nueva sesión</title>
+	<link rel="stylesheet" id="bootstrap-css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div th:replace="fragments/header::header"></div>
+	<div class="container">
+		<h1 style="margin:20px 0">Nueva sesión</h1>
+		<form th:action="@{/matricula/registrar}" method="post" th:object="${matricula}">
+			<div class="form-group">
+				<label for="id">ID:</label>
+				<input type="text" class="form-control" th:field="*{id}" id="id">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('id')}" 
+					th:errors="*{id}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="curso" class="col-sm-2 col-form-label">CURSO:</label>
+				<select class="form-control" th:field="*{curso.id}">
+					<option th:each="i:${listCurso}" th:value="${i.id}"
+							th:text="${i.idioma.nombre + ' ' + i.nivel}"
+							th:selected="(${i.id} == *{curso.id})">
+					</option>			
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="alumno" class="col-sm-2 col-form-label">ALUMNO:</label>
+				<select class="form-control" th:field="*{alumno.id}">
+					<option th:each="a:${listAlumno}" th:value="${a.id}"
+							th:text="${a.nombre + ' ' + a.apellido}"
+							th:selected="(${a.id} == *{alumno.id})">
+					</option>			
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="comprobante">COMPROBANTE:</label>
+				<input type="text" class="form-control" th:field="*{comprobante}" id="comprobante">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('comprobante')}" 
+					th:errors="*{comprobante}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="fechaPago">FECHA PAGO:</label>
+				<input type="date" class="form-control" th:field="*{fechaPago}" id="fechaPago">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('fechaPago')}" 
+					th:errors="*{fechaPago}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="monto">MONTO:</label>
+				<input type="number" step="any" class="form-control" th:field="*{monto}" id="monto">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('monto')}" 
+					th:errors="*{monto}">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">Guardar</button>
+			<a href="/matricula/listar" class="btn btn-danger">Cancelar</a>
+		</form>
+	</div>
+	<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

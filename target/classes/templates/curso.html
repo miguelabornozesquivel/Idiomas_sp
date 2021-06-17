@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	<title>Nuevo curso</title>
+	<link rel="stylesheet" id="bootstrap-css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div th:replace="fragments/header::header"></div>
+	<div class="container">
+		<h1 style="margin:20px 0">Nuevo curso</h1>
+		<form th:action="@{/curso/registrar}" method="post" th:object="${curso}">
+			<div class="form-group">
+				<label for="id">ID:</label>
+				<input type="text" class="form-control" th:field="*{id}" id="id">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('id')}" 
+					th:errors="*{id}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="idioma" class="col-sm-2 col-form-label">IDIOMA:</label>
+				<select class="form-control" th:field="*{idioma.id}">
+					<option th:each="i:${listIdioma}" th:value="${i.id}"
+							th:text="${i.nombre}"
+							th:selected="(${i.id} == *{idioma.id})">
+					</option>			
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="profesor" class="col-sm-2 col-form-label">PROFESOR:</label>
+				<select class="form-control" th:field="*{profesor.id}">
+					<option th:each="p:${listProfesor}" th:value="${p.id}"
+							th:text="${p.nombre + ' ' + p.apellido}"
+							th:selected="(${p.id} == *{profesor.id})">
+					</option>			
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="nivel">NIVEL:</label>
+				<input type="text" class="form-control" th:field="*{nivel}" id="nivel">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('nivel')}" 
+					th:errors="*{nivel}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="enlace">ENLACE:</label>
+				<input type="text" class="form-control" th:field="*{enlace}" id="enlace">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('enlace')}" 
+					th:errors="*{enlace}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="duracion">SEMANAS:</label>
+				<input type="number" class="form-control" th:field="*{duracion}" id="duracion">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('duracion')}" 
+					th:errors="*{duracion}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="fechaIni">FECHA INICIO:</label>
+				<input type="date" class="form-control" th:field="*{fechaIni}" id="fechaIni">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('fechaIni')}" 
+					th:errors="*{fechaIni}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="fechaFin">FECHA INICIO:</label>
+				<input type="date" class="form-control" th:field="*{fechaFin}" id="fechaFin">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('fechaFin')}" 
+					th:errors="*{fechaFin}">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">Guardar</button>
+			<a href="/curso/listar" class="btn btn-danger">Cancelar</a>
+		</form>
+	</div>
+	<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>
