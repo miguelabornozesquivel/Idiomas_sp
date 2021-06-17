@@ -62,8 +62,8 @@ public class ProfesorServiceImpl implements IProfesorService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<Profesor> buscarPorNombre(String nombre) {
-		return dProfesor.buscarPorNombre(nombre);
+	public List<Profesor> buscarPorFiltro(String filtro) {
+		return dProfesor.buscarPorFiltro(filtro);
 	}
 
 }
