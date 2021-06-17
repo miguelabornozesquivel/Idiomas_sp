@@ -2,7 +2,7 @@
 <html xmlns:th="http:www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
-	<title>Nueva sesión</title>
+	<title>Neo-Technology - Matrículas</title>
 	<link rel="stylesheet" id="bootstrap-css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -11,8 +11,8 @@
 <body>
 	<div th:replace="fragments/header::header"></div>
 	<div class="container">
-		<h1 style="margin:20px 0">Nueva sesión</h1>
-		<form th:action="@{/matricula/registrar}" method="post" th:object="${matricula}">
+		<h1 style="margin:20px 0" th:text="${matricula.id == 0 ? 'Nueva matrícula' : 'Editar matrícula'}"></h1>
+		<form th:action="@{/matriculas/registrar}" method="post" th:object="${matricula}">
 			<div class="form-group">
 				<label for="id">ID:</label>
 				<input type="text" class="form-control" th:field="*{id}" id="id">
@@ -59,8 +59,12 @@
 					th:errors="*{monto}">
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">Guardar</button>
-			<a href="/matricula/listar" class="btn btn-danger">Cancelar</a>
+			<div align="center" style="margin:30px 0 10px">
+				<button type="submit" class="btn btn-primary">
+					<span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+				</button>
+				<a href="/matriculas/" class="btn btn-danger">Cancelar</a>
+			</div>
 		</form>
 	</div>
 	<div th:replace="fragments/footer::footer"></div>

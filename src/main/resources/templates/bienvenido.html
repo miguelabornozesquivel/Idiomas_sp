@@ -2,7 +2,7 @@
 <html xmlns:th="http:www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
-	<title>Neo-Technology 2.0</title>
+	<title>Neo-Technology - Bienvenido</title>
 	<link rel="stylesheet" id="bootstrap-css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -11,13 +11,10 @@
 <body>
 	<div th:replace="fragments/header::header"></div>
 	<div class="container">
-		<form id="myform">
-			<div class="row clearfix">
-				<div class="col-md-12 column" align="center">
-					<img th:src="@{/imagenes/index.png}" width="900" alt="logo" align="middle"></img>
-				</div>
-			</div>
-		</form>
+		<div align="center">
+			<h1 style="margin:20px 0">Bienvenido a Neo-Technology</h1>
+			<img th:src="@{/imagenes/index.png}" width="800" alt="logo" align="middle"></img>
+		</div>
 	</div>
 	<div th:replace="fragments/footer::footer"></div>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns:th="http:www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
-	<title>Sesiones</title>
+	<title>Neo-Technology - Sesiones</title>
 	<link rel="stylesheet" id="bootstrap-css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -12,18 +12,24 @@
 	<div th:replace="fragments/header::header"></div>
 	<div class="container">
 		<h1 style="margin:20px 0">Sesiones</h1>
+		<form th:action="@{/sesiones/buscar}" method="post" th:object="${sesion}">
+			<div class="form-group">
+				<label for="detalle">Texto a buscar:</label>
+				<input type="text" class="form-control" th:field="*{detalle}" id="detalle">
+			</div>
+			<button type="submit" class="btn btn-primary btn-md left-block" 
+				style="border-bottom-color:green">
+				<span class="glyphicon glyphicon-search"></span> Buscar
+			</button>
+			<a style="border-bottom-color:green" th:href="@{/sesiones/irRegistrar}" id="add-row" 
+				type="button" class="btn btn-primary btn-md left-block">
+				<span class="glyphicon glyphicon-plus"></span> Nuevo
+			</a>
+		</form>
+		<div style="height:20px"></div>
 		<form id="myform">
 			<div class="row clearfix">
 				<div class="col-md-12 column">
-					<a style="border-bottom-color:green" th:href="@{/sesion/irRegistrar}" id="add-row" 
-						type="button" class="btn btn-primary btn-md left-block">
-						<span class="glyphicon glyphicon-plus"></span> Nuevo
-					</a>
-					<a style="border-bottom-color:green" th:href="@{/sesion/irBuscar}" id="add-row" 
-						type="button" class="btn btn-primary btn-md left-block">
-						<span class="glyphicon glyphicon-search"></span> Buscar
-					</a>
-					<div style="height:20px"></div>
 					<table class="table table-bordered table-hover table-striped" id="tab_logic">
 						<thead>
 							<tr>
@@ -45,8 +51,8 @@
 								<td th:text="${#dates.format(i.horaFin,'HH:mm')}"></td>
 								<td th:text="${i.detalle}"></td>
 								<td style="text-align:center">
-									<a th:href="@{'/sesion/modificar/'+${i.id}}"><span class="glyphicon glyphicon-edit" title="Modificar"></span></a>
-									<a th:href="@{/sesion/eliminar?id=}+${i.id}"><span class="glyphicon glyphicon-trash" title="Eliminar"></span></a>
+									<a th:href="@{'/sesiones/modificar/'+${i.id}}"><span class="glyphicon glyphicon-edit" title="Modificar"></span></a>
+									<a th:href="@{/sesiones/eliminar?id=}+${i.id}"><span class="glyphicon glyphicon-trash" title="Eliminar"></span></a>
 								</td>
 							</tr>
 						</tbody>
