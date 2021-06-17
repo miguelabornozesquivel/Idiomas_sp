@@ -11,5 +11,5 @@ public interface IAlumnoService {
 	public void eliminar(int id);
 	public Optional<Alumno> listarPorId(int id);
 	List<Alumno> listar();
-	List<Alumno> buscarPorNombre(String nombre);
+	List<Alumno> buscarPorFiltro(String filtro);
 }

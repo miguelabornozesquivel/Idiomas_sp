@@ -11,5 +11,5 @@ public interface ICursoService {
 	public void eliminar(int id);
 	public Optional<Curso> listarPorId(int id);
 	List<Curso> listar();
-	List<Curso> buscarPorFiltro(String nombre);
+	List<Curso> buscarPorFiltro(String filtro);
 }
