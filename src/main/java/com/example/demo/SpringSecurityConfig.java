@@ -33,10 +33,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/dias/**").access("hasRole('ROLE_ADMIN')")
 			.antMatchers("/alumnos/**").access("hasRole('ROLE_ADMIN')")
 			.antMatchers("/profesores/**").access("hasRole('ROLE_ADMIN')")
-			.antMatchers("/cursos/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_PROFESOR')")
-			.antMatchers("/sesiones/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_PROFESOR')")
-			.antMatchers("/matriculas/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_ALUMNO')")
-			.antMatchers("/welcome/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_ALUMNO') or hasRole('ROLE_PROFESOR')").and()
+			.antMatchers("/cursos/**").access("hasRole('ROLE_ADMIN')")
+			.antMatchers("/sesiones/**").access("hasRole('ROLE_ADMIN')")
+			.antMatchers("/matriculas/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+			/*.antMatchers("/matricularme/**").access("hasRole('ROLE_USER')")*/
+			.antMatchers("/inicio/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')").and()
 			.formLogin().successHandler(successHandler).loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/welcome/bienvenido")
 			.permitAll().and().logout().logoutSuccessUrl("/login").permitAll().and().exceptionHandling().accessDeniedPage("/error_403").and()
 			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
