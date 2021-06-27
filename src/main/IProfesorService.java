@@ -19,5 +19,12 @@ public interface IProfesorService {
 	List<Profesor> listar();
 	List<Profesor> listar();
 	
+	List<Profesor> listar();
+	List<Profesor> listar();
+	List<Profesor> listar();
+	List<Profesor> listar();
+	List<Profesor> listar();
+	List<Profesor> listar();
+	
 	List<Profesor> buscarPorFiltro(String filtro);
 }
