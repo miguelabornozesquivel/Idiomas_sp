@@ -7,6 +7,11 @@ import pe.edu.upc.spring.model.Profesor;
 
 public interface IProfesorService {
 	public boolean insertar(Profesor profesor);
+	
+	public boolean insertar(Profesor profesor);
+	public boolean insertar(Profesor profesor);
+	public boolean insertar(Profesor profesor);
+	
 	public boolean modificar(Profesor profesor);
 	public void eliminar(int id);
 	public Optional<Profesor> listarPorId(int id);
