@@ -11,5 +11,13 @@ public interface IProfesorService {
 	public void eliminar(int id);
 	public Optional<Profesor> listarPorId(int id);
 	List<Profesor> listar();
+	List<Profesor> listar();
+	List<Profesor> listar();
+	List<Profesor> listar();
+	List<Profesor> listar();
+	List<Profesor> listar();
+	List<Profesor> listar();
+	List<Profesor> listar();
+	
 	List<Profesor> buscarPorFiltro(String filtro);
 }
