@@ -12,17 +12,16 @@
 	<div th:replace="fragments/header::header"></div>
 	<div class="container">
 		<h1 style="margin:20px 0">Alumnos</h1>
+		<div th:replace="fragments/messages::messages"></div>
 		<form th:action="@{/alumnos/buscar}" method="post" th:object="${alumno}">
 			<div class="form-group">
 				<label for="nombre">Texto a buscar:</label>
 				<input type="text" class="form-control" th:field="*{nombre}" id="nombre">
 			</div>
-			<button type="submit" class="btn btn-primary btn-md left-block" 
-				style="border-bottom-color:green">
+			<button type="submit" class="btn btn-primary btn-md left-block">
 				<span class="glyphicon glyphicon-search"></span> Buscar
 			</button>
-			<a style="border-bottom-color:green" th:href="@{/alumnos/irRegistrar}" id="add-row" 
-				type="button" class="btn btn-primary btn-md left-block">
+			<a type="button" class="btn btn-primary btn-md left-block" th:href="@{/alumnos/irRegistrar}" id="add-row">
 				<span class="glyphicon glyphicon-plus"></span> Nuevo
 			</a>
 		</form>
@@ -53,10 +52,8 @@
 					</table>
 				</div>
 			</div>
-			<div th:if="${mensaje}" class="alert alert-danger">
-				<p th:text="${mensaje}"></p>
-			</div>
 		</form>
+		<div th:replace="fragments/result::result"></div>
 	</div>
 	<div th:replace="fragments/footer::footer"></div>
 </body>

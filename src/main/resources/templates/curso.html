@@ -12,6 +12,7 @@
 	<div th:replace="fragments/header::header"></div>
 	<div class="container">
 		<h1 style="margin:20px 0" th:text="${curso.id == 0 ? 'Nuevo curso' : 'Editar curso'}"></h1>
+		<div th:replace="fragments/messages::messages"></div>
 		<form th:action="@{/cursos/registrar}" method="post" th:object="${curso}">
 			<div class="form-group">
 				<label for="id">ID:</label>
@@ -40,21 +41,21 @@
 			</div>
 			<div class="form-group">
 				<label for="nivel">NIVEL:</label>
-				<input type="text" class="form-control" th:field="*{nivel}" id="nivel">
+				<input type="text" class="form-control" th:field="*{nivel}" id="nivel" maxLength="50">
 				<div class="alert alert-danger" th:if="${#fields.hasErrors('nivel')}" 
 					th:errors="*{nivel}">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="enlace">ENLACE:</label>
-				<input type="text" class="form-control" th:field="*{enlace}" id="enlace">
+				<input type="text" class="form-control" th:field="*{enlace}" id="enlace" maxLength="100">
 				<div class="alert alert-danger" th:if="${#fields.hasErrors('enlace')}" 
 					th:errors="*{enlace}">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="duracion">SEMANAS:</label>
-				<input type="number" class="form-control" th:field="*{duracion}" id="duracion">
+				<input type="number" class="form-control" th:field="*{duracion}" id="duracion" readonly>
 				<div class="alert alert-danger" th:if="${#fields.hasErrors('duracion')}" 
 					th:errors="*{duracion}">
 				</div>

@@ -12,6 +12,7 @@
 	<div th:replace="fragments/header::header"></div>
 	<div class="container">
 		<h1 style="margin:20px 0" th:text="${matricula.id == 0 ? 'Nueva matrícula' : 'Editar matrícula'}"></h1>
+		<div th:replace="fragments/messages::messages"></div>
 		<form th:action="@{/matriculas/registrar}" method="post" th:object="${matricula}">
 			<div class="form-group">
 				<label for="id">ID:</label>
@@ -24,7 +25,7 @@
 				<label for="curso" class="col-sm-2 col-form-label">CURSO:</label>
 				<select class="form-control" th:field="*{curso.id}">
 					<option th:each="i:${listCurso}" th:value="${i.id}"
-							th:text="${i.idioma.nombre + ' ' + i.nivel}"
+							th:text="${i.idioma.nombre + ' ' + i.nivel + '    / Duración: ' + #dates.format(i.fechaIni,'dd/MM/yyyy') + ' - ' + #dates.format(i.fechaFin,'dd/MM/yyyy')}"
 							th:selected="(${i.id} == *{curso.id})">
 					</option>			
 				</select>
@@ -40,7 +41,7 @@
 			</div>
 			<div class="form-group">
 				<label for="comprobante">COMPROBANTE:</label>
-				<input type="text" class="form-control" th:field="*{comprobante}" id="comprobante">
+				<input type="text" class="form-control" th:field="*{comprobante}" id="comprobante" maxLength="50">
 				<div class="alert alert-danger" th:if="${#fields.hasErrors('comprobante')}" 
 					th:errors="*{comprobante}">
 				</div>
@@ -53,7 +54,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="monto">MONTO:</label>
+				<label for="monto">MONTO (S/):</label>
 				<input type="number" step="any" class="form-control" th:field="*{monto}" id="monto">
 				<div class="alert alert-danger" th:if="${#fields.hasErrors('monto')}" 
 					th:errors="*{monto}">

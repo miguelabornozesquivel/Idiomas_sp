@@ -12,6 +12,7 @@
 	<div th:replace="fragments/header::header"></div>
 	<div class="container">
 		<h1 style="margin:20px 0" th:text="${profesor instanceof T(pe.edu.upc.spring.model.Profesor) ? 'Nuevo profesor' : 'Editar profesor'}"></h1>
+		<div th:replace="fragments/messages::messages"></div>
 		<form th:action="@{/profesores/registrar}" method="post" th:object="${profesor}">
 			<div class="form-group">
 				<label for="id">ID:</label>

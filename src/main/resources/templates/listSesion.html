@@ -12,17 +12,16 @@
 	<div th:replace="fragments/header::header"></div>
 	<div class="container">
 		<h1 style="margin:20px 0">Sesiones</h1>
+		<div th:replace="fragments/messages::messages"></div>
 		<form th:action="@{/sesiones/buscar}" method="post" th:object="${sesion}">
 			<div class="form-group">
 				<label for="detalle">Texto a buscar:</label>
 				<input type="text" class="form-control" th:field="*{detalle}" id="detalle">
 			</div>
-			<button type="submit" class="btn btn-primary btn-md left-block" 
-				style="border-bottom-color:green">
+			<button type="submit" class="btn btn-primary btn-md left-block">
 				<span class="glyphicon glyphicon-search"></span> Buscar
 			</button>
-			<a style="border-bottom-color:green" th:href="@{/sesiones/irRegistrar}" id="add-row" 
-				type="button" class="btn btn-primary btn-md left-block">
+			<a type="button" class="btn btn-primary btn-md left-block" th:href="@{/sesiones/irRegistrar}" id="add-row">
 				<span class="glyphicon glyphicon-plus"></span> Nuevo
 			</a>
 		</form>
@@ -35,6 +34,7 @@
 							<tr>
 								<th class="text-center">CÓDIGO</th>
 								<th class="text-center">CURSO</th>
+								<th class="text-center">PROFESOR</th>
 								<th class="text-center">DÍA</th>
 								<th class="text-center">HORA INICIO</th>
 								<th class="text-center">HORA FIN</th>
@@ -46,6 +46,7 @@
 							<tr th:each="i:${listSesion}">
 								<td th:text="${i.id}"></td>
 								<td th:text="${i.curso.idioma.nombre + ' ' + i.curso.nivel}"></td>
+								<td th:text="${i.curso.profesor.nombre + ' ' + i.curso.profesor.apellido}"></td>
 								<td th:text="${i.dia.nombre}"></td>
 								<td th:text="${#dates.format(i.horaIni,'HH:mm')}"></td>
 								<td th:text="${#dates.format(i.horaFin,'HH:mm')}"></td>
@@ -59,10 +60,8 @@
 					</table>
 				</div>
 			</div>
-			<div th:if="${mensaje}" class="alert alert-danger">
-				<p th:text="${mensaje}"></p>
-			</div>
 		</form>
+		<div th:replace="fragments/result::result"></div>
 	</div>
 	<div th:replace="fragments/footer::footer"></div>
 </body>

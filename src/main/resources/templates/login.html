@@ -9,6 +9,7 @@
 	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
+	<div th:replace="fragments/header::header"></div>
 	<div class="container" align="center">
 		<h1 style="margin:50px 0">Inicio de sesión</h1>
 		<img th:src="@{/imagenes/user.png}" width="200" alt="logo" align="middle" style="margin-bottom:20px"></img>
@@ -25,8 +26,9 @@
 					class="form-control" placeholder="Usuario" autofocus required/>
 				<input type="password" name="password" id="password" style="margin-bottom:20px"
 					class="form-control" placeholder="Contraseña" required/>
-				<input type="submit" class="btn btn-lg btn-primary btn-block"
+				<input type="submit" class="btn btn-lg btn-primary btn-block" style="margin-bottom:30px"
 					value="Iniciar sesión" />
+				<a href="/index">Regresar</a>
 			</div>
 			<input type="hidden" th:name="${_csrf.parameterName}"
 				th:value="${_csrf.token}" />

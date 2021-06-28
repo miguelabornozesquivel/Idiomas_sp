@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8"></meta>
+</head>
+<body>
+	<div th:fragment="result">
+		<div th:if="${info}" class="alert alert-info">
+			<p th:utext="${info}"></p>
+		</div>
+	</div>
+</body>
+</html>
