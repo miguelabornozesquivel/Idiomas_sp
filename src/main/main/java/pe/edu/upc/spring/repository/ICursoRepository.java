@@ -16,4 +16,7 @@ public interface ICursoRepository extends JpaRepository<Curso, Integer>{
 			+ "upper(r.idioma.nombre) like '%'||upper(:filtro)||'%' or "
 			+ "upper(r.profesor.nombre) like '%'||upper(:filtro)||'%'")
 	List<Curso> buscarPorFiltro(@Param("filtro") String filtro);
+	
+	@Query("from Curso o where upper(trim(o.enlace)) = upper(trim(:enlace)) and o.id != :id")
+	List<Curso> buscarDuplicado(String enlace, int id);
 }

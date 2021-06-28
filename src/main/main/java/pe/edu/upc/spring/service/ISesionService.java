@@ -6,8 +6,7 @@ import java.util.Optional;
 import pe.edu.upc.spring.model.Sesion;
 
 public interface ISesionService {
-	public boolean insertar(Sesion sesion);
-	public boolean modificar(Sesion sesion);
+	public int insertar(Sesion sesion);
 	public void eliminar(int id);
 	public Optional<Sesion> listarPorId(int id);
 	List<Sesion> listar();

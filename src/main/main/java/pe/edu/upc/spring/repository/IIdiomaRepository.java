@@ -11,6 +11,9 @@ import pe.edu.upc.spring.model.Idioma;
 
 @Repository
 public interface IIdiomaRepository extends JpaRepository<Idioma, Integer>{
-	@Query("from Idioma r where upper(r.nombre) like '%'||upper(:nombre)||'%'")
-	List<Idioma> buscarPorNombre(@Param("nombre") String nombre);
+	@Query("from Idioma o where upper(o.nombre) like '%'||upper(:filtro)||'%'")
+	List<Idioma> buscarPorFiltro(@Param("filtro") String filtro);
+	
+	@Query("from Idioma o where upper(trim(o.nombre)) = upper(trim(:nombre)) and o.id != :id")
+	List<Idioma> buscarDuplicado(String nombre, int id);
 }

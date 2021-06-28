@@ -11,6 +11,9 @@ import pe.edu.upc.spring.model.Dia;
 
 @Repository
 public interface IDiaRepository extends JpaRepository<Dia, Integer>{
-	@Query("from Dia r where upper(r.nombre) like '%'||upper(:nombre)||'%'")
-	List<Dia> buscarPorNombre(@Param("nombre") String nombre);
+	@Query("from Dia o where upper(o.nombre) like '%'||upper(:filtro)||'%'")
+	List<Dia> buscarPorFiltro(@Param("filtro") String filtro);
+	
+	@Query("from Dia o where upper(trim(o.nombre)) = upper(trim(:nombre)) and o.id != :id")
+	List<Dia> buscarDuplicado(String nombre, int id);
 }

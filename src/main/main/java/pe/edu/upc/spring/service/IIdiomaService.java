@@ -6,10 +6,9 @@ import java.util.Optional;
 import pe.edu.upc.spring.model.Idioma;
 
 public interface IIdiomaService {
-	public boolean insertar(Idioma idioma);
-	public boolean modificar(Idioma idioma);
+	public Integer insertar(Idioma idioma);
 	public void eliminar(int id);
 	public Optional<Idioma> listarPorId(int id);
 	List<Idioma> listar();
-	List<Idioma> buscarPorNombre(String nombre);
+	List<Idioma> buscarPorFiltro(String filtro);
 }
