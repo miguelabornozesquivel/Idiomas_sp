@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,16 +28,19 @@ public class Sesion implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	@NotNull(message="Campo obligatorio")
 	@Temporal(TemporalType.TIME)
 	@DateTimeFormat(pattern="HH:mm")
 	@Column(name="horaIni", nullable=false)
 	private Date horaIni;
 	
+	@NotNull(message="Campo obligatorio")
 	@Temporal(TemporalType.TIME)
 	@DateTimeFormat(pattern="HH:mm")
 	@Column(name="horaFin", nullable=false)
 	private Date horaFin;
-
+	
+	@Size(max=100, message="Máximo 50 caracteres")
 	@Column(name="detalle", length=100, nullable=true)
 	private String detalle;
 	

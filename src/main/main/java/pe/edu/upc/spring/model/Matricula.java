@@ -13,6 +13,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,14 +33,21 @@ public class Matricula implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	@Size(max=50, message="Máximo 50 caracteres")
+	@NotEmpty(message="Campo obligatorio")
+	@NotBlank(message="No puede estar en blanco")
 	@Column(name="comprobante", nullable=false, length=50)
 	private String comprobante;
 	
+	@NotNull(message="Campo obligatorio")
+	@PastOrPresent(message="No se permite fechas futuras")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name="fechaPago", nullable=false)
 	private Date fechaPago;
-
+	
+	@Positive(message="Solo se permite valores positivos")
+	@Min( value= 150, message="El monto mínimo es 150")
 	@Column(name="monto", nullable=false)
 	private float monto;
 	
